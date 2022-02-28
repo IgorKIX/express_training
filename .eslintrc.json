@@ -1,0 +1,6 @@
+{
+  "extends": "vazco",
+  "rules": {
+    // custom project rules
+  }
+}
