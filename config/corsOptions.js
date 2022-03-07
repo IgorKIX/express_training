@@ -1,4 +1,5 @@
-const whitelist = ['http://localhost:3500'];
+const whitelist = require('./whiteList');
+
 const corsOptions = {
   origin: (origin, callback) => {
     // eslint-disable-next-line no-console
