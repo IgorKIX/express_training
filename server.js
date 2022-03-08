@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 const path = require('path');
 
 const corsOptions = require('./config/corsOptions');
@@ -12,6 +13,19 @@ const { logger } = require('./middleware/logEvents');
 const verifyJWT = require('./middleware/verifyJWT');
 
 const PORT = process.env.PORT || 3500;
+
+const connect = async () => {
+  const dbUri = 'mongodb://mongo_db:27017/express_intro';
+
+  try {
+    await mongoose.connect(dbUri);
+    console.log('DB connected');
+  } catch (error) {
+    console.log('Could not connected to DB');
+
+    process.exit(1);
+  }
+};
 
 app.use(logger);
 
@@ -32,6 +46,8 @@ app.use(cookieParser());
 
 // serve static files
 app.use(express.static(path.join(__dirname, '/public')));
+
+connect();
 
 // routes
 app.use('/', require('./routes/root'));
